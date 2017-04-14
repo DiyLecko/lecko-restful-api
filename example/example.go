@@ -19,12 +19,14 @@ func (examResource) Uri() string {
 	return "/api/v1/exam"
 }
 
+// You can make Get, Post, Put, Delete
 func (resource examResource) Get(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) restapi.Response {
 	result := map[string]interface{}{
 		"a": 1,
 		"b": 2,
 	}
 
+	// restapi.Response{statusCode, message, data}
 	return restapi.Response{200, "message", result}
 }
 
@@ -73,6 +75,7 @@ func (resource examIdResource) Get(rw http.ResponseWriter, r *http.Request, ps h
 func StartExampleRest() {
 	// Init restapi
 	api := restapi.Init()
+	api.IsCORS = true // default is true
 
 	// Add examResource, examIdResource To restapi
 	api.AddResource(new(examResource))
