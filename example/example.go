@@ -81,5 +81,6 @@ func StartExampleRest() {
 	// Start restapi with Port 3000
 	api.Start("3000")
 
-	// Now you can access "localhost:3000/api/v1/exam" and "localhost:3000/api/v1/exam/123"
+	// Now you can access "[Get,Post]localhost:3000/api/v1/exam" and "[Get]localhost:3000/api/v1/exam/123"
+	// If you access "[Put,Delete]/api/v1/exam" and "[Post,Put,Delete]/api/v1/exam/123", then restapi will call restapi.___NotSupported
 }
