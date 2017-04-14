@@ -6,13 +6,6 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-const (
-	GET    = "GET"
-	POST   = "POST"
-	PUT    = "PUT"
-	DELETE = "DELETE"
-)
-
 type Resource interface {
 	Uri() string
 	Get(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) Response
