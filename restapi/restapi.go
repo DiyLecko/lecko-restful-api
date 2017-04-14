@@ -38,18 +38,34 @@ func (api *API) AddResource(resource Resource) {
 	fmt.Println("\"" + resource.Uri() + "\" api is registerd")
 
 	api.Router.GET(resource.Uri(), func(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		if ok := resource.GetRequired(r, ps); !ok {
+			api.Response(rw, r, Response{400, "Bad Request", nil})
+			return
+		}
 		res := resource.Get(rw, r, ps)
 		api.Response(rw, r, res)
 	})
 	api.Router.POST(resource.Uri(), func(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		if ok := resource.PostRequired(r, ps); !ok {
+			api.Response(rw, r, Response{400, "Bad Request", nil})
+			return
+		}
 		res := resource.Post(rw, r, ps)
 		api.Response(rw, r, res)
 	})
 	api.Router.PUT(resource.Uri(), func(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		if ok := resource.PutRequired(r, ps); !ok {
+			api.Response(rw, r, Response{400, "Bad Request", nil})
+			return
+		}
 		res := resource.Put(rw, r, ps)
 		api.Response(rw, r, res)
 	})
 	api.Router.DELETE(resource.Uri(), func(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		if ok := resource.DeleteRequired(r, ps); !ok {
+			api.Response(rw, r, Response{400, "Bad Request", nil})
+			return
+		}
 		res := resource.Delete(rw, r, ps)
 		api.Response(rw, r, res)
 	})
