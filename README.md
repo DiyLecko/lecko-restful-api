@@ -122,6 +122,6 @@ func StartExampleRest() {
 
 TODO
 ------------
-1. Remove github.com/julienschmidt/httprouter in front.
+1. Remove net/http and github.com/julienschmidt/httprouter in import...
 2. Add examples
 3. Add db support
