@@ -24,6 +24,13 @@ Also you can create new apis with following Example.
 
 
 
+Route
+--------------
+
+This project is using [github.com/julienschmidt/httprouter](https://github.com/julienschmidt/httprouter) for route. Your return value of Uri() will be processed by httprouter.
+
+
+
 Example
 --------------
 ```golang
