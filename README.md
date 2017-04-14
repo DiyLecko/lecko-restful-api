@@ -4,8 +4,6 @@ lecko-restful-api
 
 Lecko's Simple RESTful API Server with GoLang
 
-----------
-
 
 What is this?
 -------------
@@ -106,6 +104,7 @@ func (resource examIdResource) Get(rw http.ResponseWriter, r *http.Request, ps h
 func StartExampleRest() {
 	// Init restapi
 	api := restapi.Init()
+	api.IsCORS = true // default is true
 
 	// Add examResource, examIdResource To restapi
 	api.AddResource(new(examResource))
