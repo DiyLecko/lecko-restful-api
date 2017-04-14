@@ -1,21 +1,15 @@
 package restapi
 
-import (
-	"net/http"
-
-	"github.com/julienschmidt/httprouter"
-)
-
 type Resource interface {
 	Uri() string
-	Get(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) Response
-	GetRequired(r *http.Request, ps httprouter.Params) bool
-	Post(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) Response
-	PostRequired(r *http.Request, ps httprouter.Params) bool
-	Put(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) Response
-	PutRequired(r *http.Request, ps httprouter.Params) bool
-	Delete(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) Response
-	DeleteRequired(r *http.Request, ps httprouter.Params) bool
+	Get(rp RestParam) Response
+	GetRequired(rp RestParam) bool
+	Post(rp RestParam) Response
+	PostRequired(rp RestParam) bool
+	Put(rp RestParam) Response
+	PutRequired(rp RestParam) bool
+	Delete(rp RestParam) Response
+	DeleteRequired(rp RestParam) bool
 }
 
 type (
@@ -30,34 +24,34 @@ func (UriNotRegistered) Uri() string {
 	return ""
 }
 
-func (GetNotSupported) Get(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) Response {
+func (GetNotSupported) Get(rp RestParam) Response {
 	return Response{405, "", nil}
 }
 
-func (GetNotSupported) GetRequired(r *http.Request, ps httprouter.Params) bool {
+func (GetNotSupported) GetRequired(rp RestParam) bool {
 	return true
 }
 
-func (PostNotSupported) Post(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) Response {
+func (PostNotSupported) Post(rp RestParam) Response {
 	return Response{405, "", nil}
 }
 
-func (PostNotSupported) PostRequired(r *http.Request, ps httprouter.Params) bool {
+func (PostNotSupported) PostRequired(rp RestParam) bool {
 	return true
 }
 
-func (PutNotSupported) Put(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) Response {
+func (PutNotSupported) Put(rp RestParam) Response {
 	return Response{405, "", nil}
 }
 
-func (PutNotSupported) PutRequired(r *http.Request, ps httprouter.Params) bool {
+func (PutNotSupported) PutRequired(rp RestParam) bool {
 	return true
 }
 
-func (DeleteNotSupported) Delete(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) Response {
+func (DeleteNotSupported) Delete(rp RestParam) Response {
 	return Response{405, "", nil}
 }
 
-func (DeleteNotSupported) DeleteRequired(r *http.Request, ps httprouter.Params) bool {
+func (DeleteNotSupported) DeleteRequired(rp RestParam) bool {
 	return true
 }

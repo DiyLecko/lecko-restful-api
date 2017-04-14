@@ -1,10 +1,7 @@
 package example
 
 import (
-	"net/http"
-
 	"github.com/DiyLecko/lecko-restful-api/restapi"
-	"github.com/julienschmidt/httprouter"
 )
 
 type examResource struct {
@@ -20,7 +17,7 @@ func (examResource) Uri() string {
 }
 
 // You can make Get, Post, Put, Delete
-func (resource examResource) Get(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) restapi.Response {
+func (resource examResource) Get(rp restapi.RestParam) restapi.Response {
 	result := map[string]interface{}{
 		"a": 1,
 		"b": 2,
@@ -30,8 +27,8 @@ func (resource examResource) Get(rw http.ResponseWriter, r *http.Request, ps htt
 	return restapi.Response{200, "message", result}
 }
 
-func (resource examResource) Post(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) restapi.Response {
-	result := "\"requiredField\" field value is " + r.FormValue("requiredField")
+func (resource examResource) Post(rp restapi.RestParam) restapi.Response {
+	result := "\"requiredField\" field value is " + rp.Request.FormValue("requiredField")
 	return restapi.Response{200, "message", result}
 }
 
@@ -40,10 +37,10 @@ var examResourcePostRequired = []string{
 	"requiredField",
 }
 
-func (examResource) PostRequired(r *http.Request, ps httprouter.Params) bool {
-	if r != nil {
+func (examResource) PostRequired(rp restapi.RestParam) bool {
+	if rp.Request != nil {
 		for _, arg := range examResourcePostRequired {
-			if r.FormValue(arg) == "" {
+			if rp.Request.FormValue(arg) == "" {
 				return false
 			}
 		}
@@ -64,9 +61,9 @@ func (examIdResource) Uri() string {
 	return "/api/v1/exam/:id"
 }
 
-func (resource examIdResource) Get(rw http.ResponseWriter, r *http.Request, ps httprouter.Params) restapi.Response {
+func (resource examIdResource) Get(rp restapi.RestParam) restapi.Response {
 	result := map[string]interface{}{
-		"id": ps.ByName("id"),
+		"id": rp.Params.ByName("id"),
 	}
 
 	return restapi.Response{200, "message", result}
