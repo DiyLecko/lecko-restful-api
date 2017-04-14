@@ -31,6 +31,21 @@ This project is using [github.com/julienschmidt/httprouter](https://github.com/j
 
 
 
+RestParam
+--------------
+
+```golang
+type RestParam struct {
+	ResponseWriter http.ResponseWriter
+	Request        *http.Request
+	Params         httprouter.Params
+}
+```
+
+http.ResponseWriter and http.Request is well known and if you know httprouter, you also know httprouter.Params.
+
+
+
 Example
 --------------
 ```golang
@@ -117,7 +132,8 @@ func StartExampleRest() {
 	// Start restapi with Port 3000
 	api.Start("3000")
 
-	// Now you can access "localhost:3000/api/v1/exam" and "localhost:3000/api/v1/exam/123"
+	// Now you can access "[Get,Post]localhost:3000/api/v1/exam" and "[Get]localhost:3000/api/v1/exam/123"
+	// If you access "[Put,Delete]/api/v1/exam" and "[Post,Put,Delete]/api/v1/exam/123", then restapi will call restapi.___NotSupported
 }
 ```
 
